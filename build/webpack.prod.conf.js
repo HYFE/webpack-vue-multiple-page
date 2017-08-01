@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const LodashWebpackPlugin = require('lodash-webpack-plugin')
-const WebpackMd5Hash = require('webpack-md5-hash')
 const baseConfig = require('./webpack.base.conf')
 const projectConf = require('./config')
 const distDir = path.resolve(__dirname, '../' + projectConf.distDir)
@@ -42,7 +41,7 @@ module.exports = merge(baseConfig, {
             }
         }),
         new LodashWebpackPlugin(),
-        new WebpackMd5Hash(),
+        new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
