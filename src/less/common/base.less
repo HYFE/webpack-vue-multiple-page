@@ -1,0 +1,81 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: @scrollbar-wdith;
+  height: @scrollbar-wdith;
+
+  &-track {
+    background-color: rgba(255, 255, 255, .6);
+  }
+  &-thumb {
+    background-color: rgba(0, 0, 0, .3);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 8px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, .4)
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, .5)
+    }
+  }
+}
+
+::selection {
+  color: @text-white-color;
+  background: @primary-color;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  color: @text-base-color;
+}
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: @link-color;
+  text-decoration: none;
+}
+
+ul.default,
+ol.default {
+  padding-left: 30px
+}
+
+ul.default {
+  list-style: disc
+}
+
+ol.default {
+  list-style: decimal
+}
+
+img {
+  width: 100%
+}

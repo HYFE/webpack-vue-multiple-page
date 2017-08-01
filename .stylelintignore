@@ -1,0 +1,4 @@
+node_modules
+public
+src/element
+src/less/icons.less

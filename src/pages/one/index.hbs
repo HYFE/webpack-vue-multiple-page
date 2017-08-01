@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <title>{{title}}</title>
+</head>
+<body>
+    <hello id="app"></hello>
+    {{#if devMode}}
+    {{#each chunks}}
+    <script src="/{{this}}.js"></script>
+    {{/each}}
+    {{/if}}
+</body>
+</html>
