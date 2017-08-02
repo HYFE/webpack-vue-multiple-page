@@ -1,2 +1,147 @@
 # webpack-vue-multiple-page
-Webpack, Vue 开发多页面项目环境
+Webpack, Vue 开发多页面项目环境。
+
+## 变更
+
+### mock 不在拼接文件名到请求路径中
+
+如请求：`/api/project/list`：
+
+```js
+// project.js
+
+// 之前
+module.exports = [{
+    url: '/list',
+    data: [{
+        id: '@id',
+        name: '@cname',
+    }, {
+        id: '@id',
+        name: '@cname',
+    }, {
+        id: '@id',
+        name: '@cname',
+    }]
+}]
+
+// 现在
+module.exports = [{
+    url: '/project/list',
+    data: [{
+        id: '@id',
+        name: '@cname',
+    }, {
+        id: '@id',
+        name: '@cname',
+    }, {
+        id: '@id',
+        name: '@cname',
+    }]
+}]
+```
+
+> 原来的做法会因为某个模块业务逻辑庞大，导致该模块对应的文件内 mock 配置过多，不利于查看和多人修改时经常文件冲突。
+
+### 移除 Ajax 工具类
+
+```js
+// 原来
+import Ajax from 'core/ajax'
+
+const myApi = new Ajax(yourPath)
+
+export default myApi
+
+// 现在
+import { PATH, GET } from 'core/ajax'
+
+const getList = () => GET('/project/list')
+const getOne = id => GET(`/project/${id}`)
+// 也可以这样，方便 path 复用，返回 projectRes.get/post/delete/put/request
+const projectRes = id => PATH('/project/:id', id)
+
+export default {
+    getList,
+    getOne,
+    projectRes
+}
+```
+
+## 入口
+
+原来单页应用开发时，以 `src/main.js` 为入口文件，现在都放到 `src/pages` 目录，按页面名建议文件夹。
+
+```bash
+🗁 pages
+  |--🗁 one
+  |  |--🗎 index.hbs    # 模版
+  |  `--🗎 index.js     # 入口文件
+  `--🗎 index.hbs       # 由于没有 index 页面，所以添加一个模版生成导航页。
+```
+
+添加新页面时需要在 `build/config.js` 中做对应配置：
+
+```js
+module.exports = {
+    // ...
+    pages: [{ // src/pages 目录下多页面配置
+        title: '测试', // 页面标题
+        name: 'one', // 页面名称与 js 名称一致
+        chunks: ['common', 'one']
+        // output: 'one.jsp'  // 打包输出文件
+    }]
+}
+```
+
+## 插件
+
+对于 Vue 插件，有 `mixins`、`filters`、`components`、`directives` 等，有些是需要全局注册的，有些是按需引用的。
+
+现规划如下：
+
+1. 每个插件模块只输出自身，不做注册
+2. 需要全局引用的插件，在 `components/index.js`、`mixins/index.js`、`plugins/index.js` 中注册
+3. 按需引用的插件在需要的组件内注册
+
+如添加一个指令：
+
+```js
+// plugins/hello.js
+const fn = () => console.log('hello')
+
+export default {
+    name: 'hello',
+    bind(el) {
+        el.addEventListener('click', fn)
+    },
+    unbind(el) {
+        el.removeEventListener('click', fn)
+    }
+}
+```
+
+如果要注册到全局，就在 `plugins/index.js` 中注册：
+
+```js
+import hello from './hello'
+
+export default {
+    install(Vue) {
+        Vue.directive(hello.name, hello)
+    }
+}
+```
+
+否则在需要的组件内引用：
+
+```js
+import hello from 'plugins/hello'
+
+export default {
+    mixins: [hello],
+    // ...
+}
+```
+
+> 其实全局资源最终都是在 `src/common.js` 中引用，会打包为一个公共的 `bundle`。

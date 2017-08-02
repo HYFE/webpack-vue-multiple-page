@@ -66,3 +66,14 @@ export const DELETE = (url, params) => HTTP_HANDLE(axios.delete(url, params ? {
  * @param {*} option
  */
 export const REQUEST = (url, option) => HTTP_HANDLE(axios(url, option))
+
+export const PATH = (url, ...arg) => {
+    const reqUrl = url.replace(/:[a-zA-Z]+/g, () => arg.shift())
+    return {
+        get: params => GET(reqUrl, params),
+        post: params => POST(reqUrl, params),
+        delete: params => DELETE(reqUrl, params),
+        put: params => PUT(reqUrl, params),
+        request: params => REQUEST(reqUrl, params),
+    }
+}
