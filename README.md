@@ -5,12 +5,11 @@ Webpack, Vue 开发多页面项目环境。
 
 ### mock 不在拼接文件名到请求路径中
 
-如请求：`/api/project/list`：
+如请求：`/api/project/list`，编辑 `mock/project.js`：
+
+原来：
 
 ```js
-// project.js
-
-// 之前
 module.exports = [{
     url: '/list',
     data: [{
@@ -24,8 +23,11 @@ module.exports = [{
         name: '@cname',
     }]
 }]
+```
 
-// 现在
+现在：
+
+```js
 module.exports = [{
     url: '/project/list',
     data: [{
@@ -45,6 +47,8 @@ module.exports = [{
 
 ### 移除 Ajax 工具类
 
+原来：
+
 ```js
 // 原来
 import Ajax from 'core/ajax'
@@ -52,8 +56,11 @@ import Ajax from 'core/ajax'
 const myApi = new Ajax(yourPath)
 
 export default myApi
+```
 
-// 现在
+现在：
+
+```js
 import { PATH, GET } from 'core/ajax'
 
 const getList = () => GET('/project/list')
@@ -68,9 +75,11 @@ export default {
 }
 ```
 
+> 按需使用不同的工具函数，减少类冗余。
+
 ## 入口
 
-原来单页应用开发时，以 `src/main.js` 为入口文件，现在都放到 `src/pages` 目录，按页面名建议文件夹。
+原来单页应用开发时，以 `src/main.js` 为入口文件，现在都放到 `src/pages` 目录，按页面名建立文件夹。
 
 ```bash
 🗁 pages
@@ -100,9 +109,9 @@ module.exports = {
 
 现规划如下：
 
-1. 每个插件模块只输出自身，不做注册
+1. 每个插件模块只输出插件自身，不作注册
 2. 需要全局引用的插件，在 `components/index.js`、`mixins/index.js`、`plugins/index.js` 中注册
-3. 按需引用的插件在需要的组件内注册
+3. 按需引用的插件在需要的组件中引用
 
 如添加一个指令：
 
@@ -139,9 +148,11 @@ export default {
 import hello from 'plugins/hello'
 
 export default {
-    mixins: [hello],
+    directives: {
+        hello
+    },
     // ...
 }
 ```
 
-> 其实全局资源最终都是在 `src/common.js` 中引用，会打包为一个公共的 `bundle`。
+> 全局资源都会在 `src/common.js` 中引用，最终打包为一个公共的 `bundle`。
