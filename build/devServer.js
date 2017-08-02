@@ -65,7 +65,7 @@ if (isDevMode) {
 
 const server = http.createServer(app)
 
-if (isDevMode) reload(server, app)
+if (isDevMode) reload(app)
 
 module.exports = server.listen(projectConf.devPort, err => {
     // Fix node V8.0, https://github.com/glenjamin/webpack-hot-middleware/issues/210
