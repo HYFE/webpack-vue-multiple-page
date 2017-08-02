@@ -40,7 +40,7 @@ if (projectConf.proxy) {
     var proxy = proxyMiddleware(filter, proxyOption)
     app.use(proxy)
 } else {
-    app.set('views', path.join(__dirname, '../src/pages'))
+    app.set('views', path.join(__dirname, '..', projectConf.pagesDir))
     app.set('view engine', 'hbs')
 
     app.use(bodyParser.json())

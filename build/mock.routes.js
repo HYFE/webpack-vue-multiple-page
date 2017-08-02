@@ -7,7 +7,7 @@ const uploadDir = path.join(__dirname, config.uploadDir)
 
 module.exports = app => {
     fs.readdirSync(mockPath).forEach(file => {
-        const preUrl = config.apiRoot + '/'
+        const preUrl = config.apiRoot
         require(path.resolve(mockPath, file))
             .forEach(({url = '/', method = 'get', data }) => {
                 app[method](preUrl + url, (req, res) => {

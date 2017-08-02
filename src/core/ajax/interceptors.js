@@ -28,19 +28,19 @@ export const RES_INTERCEPTOR = ({ status, headers, data: resData, config }) => {
     }
 
     // 空数据
-    const resLen = Object.keys(resData).length
-    if(typeof resData !== 'object' || !resLen) return null
+    // const resLen = Object.keys(resData).length
+    // if(typeof resData !== 'object' || !resLen) return null
 
-    const {
-        data,
-        error
-    } = resData
+    // const {
+    //     data,
+    //     error
+    // } = resData
 
     // error
-    if(error) {
-        error.config = config
-        return Promise.reject(error)
-    }
+    // if(error) {
+    //     error.config = config
+    //     return Promise.reject(error)
+    // }
     // success
-    return resLen > 1 ? resData : data
+    return resData
 }

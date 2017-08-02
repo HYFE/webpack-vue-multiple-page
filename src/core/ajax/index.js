@@ -1,17 +1,17 @@
 import axios from 'axios'
 import HTTP_HANDLE from './handler'
-import { CONTENT_TYPE, ROOT_PATH, XHR_HEADER } from './config'
-import { REQ_INTERCEPTOR, RES_INTERCEPTOR } from './interceptors'
+import { CONTENT_TYPE, ROOT_PATH } from './config'
+// import { REQ_INTERCEPTOR, RES_INTERCEPTOR } from './interceptors'
 
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE
 axios.defaults.headers.put['Content-Type'] = CONTENT_TYPE
 axios.defaults.baseURL = ROOT_PATH
 axios.defaults.headers.accpet = CONTENT_TYPE
 axios.defaults.responseType = 'json'
-Object.assign(axios.defaults.headers, XHR_HEADER)
+// Object.assign(axios.defaults.headers, XHR_HEADER)
 
-axios.interceptors.request.use(REQ_INTERCEPTOR)
-axios.interceptors.response.use(RES_INTERCEPTOR, error => Promise.reject(error))
+// axios.interceptors.request.use(REQ_INTERCEPTOR)
+// axios.interceptors.response.use(RES_INTERCEPTOR, error => Promise.reject(error))
 
 /**
  * 格式化参数

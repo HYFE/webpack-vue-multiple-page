@@ -9,7 +9,7 @@ process.noDeprecation = true
 module.exports = {
     entry: projectConf.pages.reduce((acc, item) => {
         const name = item.name
-        acc[name] = `./src/pages/${name}/index.js`
+        acc[name] = `./${projectConf.pagesDir + name}/index.js`
         return acc
     }, {
         common: ['vue', 'vue-router', 'axios', './src/common.js'],

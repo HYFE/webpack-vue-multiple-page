@@ -6,7 +6,7 @@ const matchWhiteList = ({ method, baseURL, url }) => {
 }
 
 export default request => new Promise((resolve, reject) => {
-    request.then(data => resolve(data)).catch(err => {
+    request.then(res => resolve(res.data)).catch(err => {
         const code = Number(err.code)
         if(code === 302) {
             location.href = err.location

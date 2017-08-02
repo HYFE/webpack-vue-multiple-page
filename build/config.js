@@ -7,6 +7,7 @@ module.exports = {
     apiRoot: '/api', // api root path
     uploadUrl: '/upload', // apiRoot + uploadUrl
     uploadDir: '../upload/', // 文件保存目录
+    pagesDir: 'src/pages/',
     pages: [{ // src/pages 目录下多页面配置
         title: '测试', // 页面标题
         name: 'one', // 页面名称与 js 名称一致

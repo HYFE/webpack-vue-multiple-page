@@ -63,7 +63,7 @@ module.exports = merge(baseConfig, {
     ].concat(projectConf.pages.map(item => new HtmlWebpackPlugin({
         title: item.title,
         filename: `page/${item.output || `${item.chunk}.jsp`}`,
-        template: `src/pages/${item.chunk}/index.hbs`,
+        template: `${projectConf.pagesDir + item.chunk}/index.hbs`,
         inject: true,
         minify,
         chunks: ['common', item.chunk],
