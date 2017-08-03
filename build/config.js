@@ -1,3 +1,21 @@
+const fs = require('fs')
+const path = require('path')
+
+const pagesDir = 'src/pages/'
+const pagesPath = path.join(__dirname, '..', pagesDir)
+
+// 动态读取页面目录
+const pages = fs.readdirSync(pagesPath).reduce((acc, item) => {
+    if(!/\.hbs$/.test(item)) {
+        acc.push({
+            name: item,
+            chunks: ['common', item],
+            // output: `${item}.jsp` // 打包输出文件
+        })
+    }
+    return acc
+}, [])
+
 module.exports = {
     proxy: false,  // 配置代理
     devPort: 4000, // 开发端口
@@ -7,11 +25,6 @@ module.exports = {
     apiRoot: '/api', // api root path
     uploadUrl: '/upload', // apiRoot + uploadUrl
     uploadDir: '../upload/', // 文件保存目录
-    pagesDir: 'src/pages/',
-    pages: [{ // src/pages 目录下多页面配置
-        title: '测试', // 页面标题
-        name: 'one', // 页面名称与 js 名称一致
-        chunks: ['common', 'one']
-        // output: 'one.jsp'  // 打包输出文件
-    }]
+    pagesDir,
+    pages
 }

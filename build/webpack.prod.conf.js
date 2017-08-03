@@ -61,13 +61,12 @@ module.exports = merge(baseConfig, {
             minChunks: Infinity
         }),
     ].concat(projectConf.pages.map(item => new HtmlWebpackPlugin({
-        title: item.title,
-        filename: `page/${item.output || `${item.chunk}.jsp`}`,
-        template: `${projectConf.pagesDir + item.chunk}/index.hbs`,
+        filename: `pages/${item.output || `${item.name}.html`}`,
+        template: `${projectConf.pagesDir + item.name}/index.hbs`,
         inject: true,
         minify,
-        chunks: ['common', item.chunk],
-        chunksSortMode: chunksSort(['common', item.chunk]),
+        chunks: item.chunks,
+        chunksSortMode: chunksSort(item.chunks),
         isProd: true
     })))
 })

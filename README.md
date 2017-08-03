@@ -89,19 +89,7 @@ export default {
   `--🗎 index.hbs       # 由于没有 index 页面，所以添加一个模版生成导航页。
 ```
 
-添加新页面时需要在 `build/config.js` 中做对应配置：
-
-```js
-module.exports = {
-    // ...
-    pages: [{ // src/pages 目录下多页面配置
-        title: '测试', // 页面标题
-        name: 'one', // 页面名称与 js 名称一致
-        chunks: ['common', 'one']
-        // output: 'one.jsp'  // 打包输出文件
-    }]
-}
-```
+> 开发服务启动时会自动扫描该目录，生成导航页面和每个页面的 webpack entry 配置。
 
 ## 插件
 
