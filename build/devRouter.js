@@ -10,7 +10,6 @@ router.get('/', (req, res, next) => {
 pages.forEach(({ name, title, chunks }) => {
     router.get('/' + name, (req, res, next) => {
         res.render(name + '/index', {
-            title: title,
             chunks: chunks,
             devMode: true,
         })
