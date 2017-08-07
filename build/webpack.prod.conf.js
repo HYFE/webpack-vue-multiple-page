@@ -4,6 +4,7 @@ const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const LodashWebpackPlugin = require('lodash-webpack-plugin')
 const baseConfig = require('./webpack.base.conf')
 const projectConf = require('./config')
@@ -32,7 +33,7 @@ module.exports = merge(baseConfig, {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'css/[name].[chunkhash].css',
+            filename: 'css/[name].[contenthash].css',
             allChunks: true
         }),
         new webpack.DefinePlugin({
@@ -41,6 +42,11 @@ module.exports = merge(baseConfig, {
             }
         }),
         new LodashWebpackPlugin(),
+        new OptimizeCSSPlugin({
+            cssProcessorOptions: {
+                safe: true
+            }
+        }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.UglifyJsPlugin({
